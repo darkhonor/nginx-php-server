@@ -35,4 +35,12 @@
     update_cache: true
     state: present
   when: not connected_network
-  
+- name: Install the NGINX and PHP packages 
+  ansible.builtin.apt: 
+    name: 
+      - nginx
+      - php8.1-common
+      - php8.1-fpm 
+      - php8.1-mysql 
+      - php8.1-imagick
+      - php8.1-zip

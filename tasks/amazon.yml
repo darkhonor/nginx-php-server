@@ -1,5 +1,10 @@
 ---
-- name: Install the NGINX Package
+- name: Install the NGINX and PHP packages
   ansible.builtin.dnf:
-    name: nginx
+    name:
+      - nginx
+      - libzip
+      - php8.1-common
+      - php8.1-fpm
+      - php8.1-mysqlnd
     state: present

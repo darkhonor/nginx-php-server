@@ -18,7 +18,23 @@
     enabled: true
     gpgkey: https://nginx.org/keys/nginx_signing.key
   when: connected_network
-- name: Install the NGINX Package
+- name: Download and install latest Remi GPG Key 
+  ansible.builtin.rpm_key:
+    key: https://rpms.remirepo.net/RPM-GPG-KEY-remi2023
+    state: present
+  when: connected_network
+- name: Install Remi Repo
   ansible.builtin.dnf:
-    name: nginx
+    name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    state: present
+  when: connected_network
+- name: Install the NGINX and PHP 8.1 packages
+  ansible.builtin.dnf:
+    name: 
+      - nginx
+      - php81-php-common
+      - php81-php-fpm
+      - php81-php-mysqlnd
+      - php81-php-pecl-imagick
+      - php81-php-pecl-zip
     state: present

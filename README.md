@@ -1,8 +1,10 @@
 NGINX Server with PHP Extensions
 ================================
 
-This role installs and configures the NGINX Web Server on a system, as well as the PHP 8.1 extensions.  Options exist whether 
-the server is on an Internet-connected network or on an isolated network.
+This role installs and configures the NGINX Web Server on a system, as well as the PHP 8.1 extensions.  Options exist whether the server is on an Internet-connected network or on an isolated network.
+
+This role will also install a new default index.php file in /usr/share/nginx/html that shows the installed PHP extensions.
+This file should be deleted on any further use after you have verified your system is operating correctly.
 
 Requirements
 ------------
