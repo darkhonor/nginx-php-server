@@ -2,7 +2,7 @@
 - name: Install prerequisite packages 
   ansible.builtin.apt:
     name:
-      - corl 
+      - curl 
       - gnupg2 
       - ca-certificates
       - lsb-release
