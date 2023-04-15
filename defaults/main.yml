@@ -1,2 +1,9 @@
 ---
 # defaults file for nginx-php-server
+connected_network: false
+repo_server: 'http://repo.lab.net'
+repo_path: 'repo/nginx'
+cert_path: 'certs/nginx.gpg'
+enable_service: true
+enable_ssl: false
+ssl_cert_archive: 'certs.zip'

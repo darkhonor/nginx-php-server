@@ -1,0 +1,20 @@
+---
+- name: Archive to Root Folder NGINX Default Files
+  community.general.archive:
+    path: /usr/share/nginx/html
+    dest: /root/nginx-default.tgz
+    mode: '0644'
+- name: Remove NGINX Default Files
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/rm
+      - -rf
+      - /usr/share/nginx/html/*
+    removes: /usr/share/nginx/html/default.html
+
+- name: Set NGINX Server Startup Configuration
+  ansible.builtin.service:
+    name: nginx
+    enabled: true
+    state: started
+  when: enable_service

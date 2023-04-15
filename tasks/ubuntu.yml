@@ -1,0 +1,38 @@
+---
+- name: Install prerequisite packages 
+  ansible.builtin.apt:
+    name:
+      - corl 
+      - gnupg2 
+      - ca-certificates
+      - lsb-release
+      - debian-archive-keyring
+    update_cache: true
+    state: present
+- name: Add the Internet NGINX Repository Key 
+  ansible.builtin.apt_key:
+    url: https://nginx.org/keys/nginx_signing.key
+    id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+    keyring: /etc/apt/trusted.gpg.d/nginx.gpg
+    state: present 
+  when: connected_network
+- name: Add the Local NGINX Repository Key 
+  ansible.builtin.apt_key:
+    url: '{{ repo_server }}/{{ cert_path }}'
+    id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+    keyring: /etc/apt/trusted.gpg.d/nginx.gpg
+    state: present 
+  when: not connected_network
+- name: Add the Internet NGINX Repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/nginx.gpg] http://nginx.org/packages/ubuntu {{ ansible_distribution_release }} nginx"
+    update_cache: true
+    state: present
+  when: connected_network
+- name: Add the Local NGINX Repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/nginx.gpg] {{ repo_server }}/{{ repo_path }} {{ ansible_distribution_release }} nginx"
+    update_cache: true
+    state: present
+  when: not connected_network
+  

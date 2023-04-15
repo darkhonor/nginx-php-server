@@ -1,0 +1,5 @@
+---
+- name: Install the NGINX Package
+  ansible.builtin.dnf:
+    name: nginx
+    state: present

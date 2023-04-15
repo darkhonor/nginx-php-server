@@ -1,38 +1,56 @@
-Role Name
-=========
+NGINX Server with PHP Extensions
+================================
 
-A brief description of the role goes here.
+This role installs and configures the NGINX Web Server on a system, as well as the PHP 8.1 extensions.  Options exist whether 
+the server is on an Internet-connected network or on an isolated network.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The following variables can be set for this role:
+
+* connected_network: BOOLEAN.  Is the network connected to the Internet
+* repo_server: STRING.  Protocol and server name (i.e., https://repo.test.lab)
+* repo_path: STRING.  Path on the local repository server for the package repository
+* cert_path: STRING.  Path on the local repository server to the Package GPG Certificate
+* enable_service: BOOLEAN.  Do you want to enable this service on startup>
+* enable_ssl: STRING.  Enable SSL/TLS certificates and the HTTPS protocol on port 443.
+* ssl_cert_archive: STRING.  Path on the local system with an archive containing the server certificate and private key.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+This role can be included into an Ansible playbook like so:
 
+```
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - name: nginx-php-server
+           connected_network: false
+           repo_server: http://repo.lab.net
+           repo_path: repo/nginx-server
+           cert_path: certs/nginx-signing.gpg
+           enable_service: true
+           enable_ssl: false
+```
+
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Alex Ackerman, @darkhonor

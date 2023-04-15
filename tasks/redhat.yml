@@ -1,0 +1,24 @@
+---
+- name: Add the Local NGINX Repository
+  ansible.builtin.yum_repository:
+    name: nginx
+    description: NGINX Repository Mirror
+    baseurl: "{{ repo_server }}/{{ repo_path }}"
+    gpgcheck: true
+    gpgkey: "{{ repo_server }}/{{ cert_path }}"
+    enabled: true
+    state: present
+  when: not connected_network
+- name: Add the Internet NGINX Repository
+  ansible.builtin.yum_repository:
+    name: nginx
+    description: nginx stable Repository
+    baseurl: https://nginx.org/packages/centos/$releasever/$basearch/
+    gpgcheck: true
+    enabled: true
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+  when: connected_network
+- name: Install the NGINX Package
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
