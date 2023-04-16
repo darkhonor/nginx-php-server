@@ -5,12 +5,7 @@
     dest: /root/nginx-default.tgz
     mode: '0644'
 - name: Remove NGINX Default Files
-  ansible.builtin.command:
-    argv:
-      - /usr/bin/rm
-      - -rf
-      - /usr/share/nginx/html/*
-    removes: /usr/share/nginx/html/default.html
+  ansible.builtin.command: "/usr/bin/rm -rf /usr/share/nginx/html/*"
 - name: Update NGINX Server Config
   ansible.builtin.copy:
     src: files/nginx-http.conf
