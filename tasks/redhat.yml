@@ -18,7 +18,15 @@
     enabled: true
     gpgkey: https://nginx.org/keys/nginx_signing.key
   when: connected_network
-- name: Download and install latest Remi GPG Key 
+- name: Enable Code-Ready Builder for RHEL 8
+  community.general.rhsm_repository:
+    name: codeready-builder-for-rhel-8-x86_64-rpms
+- name: Install EPEL 8 Release
+  ansible.builtin.dnf:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    state: present
+  when: connected_network
+- name: Download and install latest Remi GPG Key
   ansible.builtin.rpm_key:
     key: https://rpms.remirepo.net/RPM-GPG-KEY-remi2023
     state: present
@@ -30,7 +38,7 @@
   when: connected_network
 - name: Install the NGINX and PHP 8.1 packages
   ansible.builtin.dnf:
-    name: 
+    name:
       - nginx
       - php81-php-common
       - php81-php-fpm

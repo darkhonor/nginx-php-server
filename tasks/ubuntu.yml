@@ -1,27 +1,27 @@
 ---
-- name: Install prerequisite packages 
+- name: Install prerequisite packages
   ansible.builtin.apt:
     name:
-      - curl 
-      - gnupg2 
+      - curl
+      - gnupg2
       - ca-certificates
       - lsb-release
       - debian-archive-keyring
     update_cache: true
     state: present
-- name: Add the Internet NGINX Repository Key 
+- name: Add the Internet NGINX Repository Key
   ansible.builtin.apt_key:
     url: https://nginx.org/keys/nginx_signing.key
     id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     keyring: /etc/apt/trusted.gpg.d/nginx.gpg
-    state: present 
+    state: present
   when: connected_network
-- name: Add the Local NGINX Repository Key 
+- name: Add the Local NGINX Repository Key
   ansible.builtin.apt_key:
     url: '{{ repo_server }}/{{ cert_path }}'
     id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     keyring: /etc/apt/trusted.gpg.d/nginx.gpg
-    state: present 
+    state: present
   when: not connected_network
 - name: Add the Internet NGINX Repository
   ansible.builtin.apt_repository:
@@ -35,12 +35,12 @@
     update_cache: true
     state: present
   when: not connected_network
-- name: Install the NGINX and PHP packages 
-  ansible.builtin.apt: 
-    name: 
+- name: Install the NGINX and PHP packages
+  ansible.builtin.apt:
+    name:
       - nginx
       - php8.1-common
-      - php8.1-fpm 
-      - php8.1-mysql 
+      - php8.1-fpm
+      - php8.1-mysql
       - php8.1-imagick
       - php8.1-zip
