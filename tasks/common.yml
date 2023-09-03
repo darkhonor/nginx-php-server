@@ -23,7 +23,7 @@
   with_items:
     - files/custom.ini
     - files/uploads.ini
-- name: Copy new default start page 
+- name: Copy new default start page
   ansible.builtin.copy:
     src: files/index.php
     dest: /usr/share/nginx/html/index.php
